@@ -1,0 +1,14 @@
+{
+  "name": "tracing-example",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Ben Vinegar",
+  "license": "MIT",
+  "scripts": {
+    "start": "node web/server"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "uuid": "^8.3.2"
+  }
+}
