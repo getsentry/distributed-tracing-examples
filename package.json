@@ -2,10 +2,8 @@
   "name": "tracing-example",
   "version": "1.0.0",
   "private": true,
-  "author": "Ben Vinegar",
-  "license": "MIT",
   "scripts": {
-    "start": "node web/server"
+    "start": "node web"
   },
   "dependencies": {
     "bull": "^3.26.0",
