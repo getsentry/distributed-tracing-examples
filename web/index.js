@@ -1,7 +1,9 @@
 const path = require("path");
 const express = require("express");
 const uuid = require("uuid");
+const Bull = require("bull");
 
+const emailQueue = new Bull("email");
 const app = express();
 const port = 3000;
 
@@ -19,7 +21,36 @@ app.post("/api/v1/inviteUser", (req, res) => {
     `spanId: ${spanId}]`
   );
 
-  res.send("Hello World!");
+  emailQueue.add({
+    title: "Welcome to our product",
+    to: req.params.email,
+    meta: {
+      traceId: traceId,
+
+      // the downstream span's parent_id is this span's span_id
+      parentId: spanId,
+    },
+  });
+
+  res.status(200).send("ok");
+});
+
+// Background Task Worker
+emailQueue.process((job, done) => {
+  const spanId = uuid.v4();
+  const { traceId, parentId } = job.data.meta;
+
+  console.log(
+    "Sending email",
+    `[traceId: ${traceId},`,
+    `parentId: ${parentId},`,
+    `spanId: ${spanId}]`
+  );
+
+  // actually send the email
+  // ...
+
+  done();
 });
 
 app.listen(port, () => {

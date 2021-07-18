@@ -7,6 +7,12 @@ window.addEventListener("DOMContentLoaded", () => {
     const traceId = uuid.v4(),
       spanId = uuid.v4();
 
+    console.log(
+      "Initiate inviteUser POST request",
+      `[traceId: ${traceId},`,
+      `spanId: ${spanId}]`
+    );
+
     fetch("/api/v1/inviteUser", {
       method: "POST",
       headers: {
